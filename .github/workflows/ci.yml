@@ -50,7 +50,9 @@ jobs:
         run: npm install -g aws-cdk
 
       - name: Synthesize CDK stacks
-        run: npx cdk synth --no-lookups
+        run: |
+          npm run build
+          npx cdk synth --no-lookups
 
       - name: Run infra tests
         run: npm test -- --run

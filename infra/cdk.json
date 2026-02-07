@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node lib/index.ts",
+  "app": "node lib/index.js",
   "context": {
     "prod": false
   }
