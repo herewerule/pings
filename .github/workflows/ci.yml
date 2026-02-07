@@ -50,10 +50,7 @@ jobs:
         run: npm install -g aws-cdk
 
       - name: Synthesize CDK stacks
-        run: npx cdk synth
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: npx cdk synth --no-lookups
 
       - name: Run infra tests
         run: npm test -- --run
