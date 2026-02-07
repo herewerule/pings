@@ -15,6 +15,8 @@ import {
   aws_iam as iam,
   aws_sns_subscriptions as sns_subscriptions,
   Duration,
+  RemovalPolicy,
+  CfnOutput,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -35,8 +37,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     const medicationsTable = new dynamodb.Table(this, "MedicationsTable", {
@@ -51,8 +53,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     const photosTable = new dynamodb.Table(this, "PhotosTable", {
@@ -63,8 +65,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     const familyTable = new dynamodb.Table(this, "FamilyTable", {
@@ -75,8 +77,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     const usersTable = new dynamodb.Table(this, "UsersTable", {
@@ -87,8 +89,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     const tokensTable = new dynamodb.Table(this, "TokensTable", {
@@ -103,8 +105,8 @@ export class PingsBackendStack extends Stack {
       },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     // S3 Bucket for Photos
@@ -121,8 +123,8 @@ export class PingsBackendStack extends Stack {
         },
       ],
       removalPolicy: this.node.tryGetContext("prod")
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+        ? RemovalPolicy.RETAIN
+        : RemovalPolicy.DESTROY,
     });
 
     // SNS Topic for Family Notifications
@@ -243,17 +245,17 @@ export class PingsBackendStack extends Stack {
     notifications.addMethod("POST", new apigateway.LambdaIntegration(notificationsFunction));
 
     // Outputs
-    new cdk.CfnOutput(this, "ApiEndpoint", {
+    new CfnOutput(this, "ApiEndpoint", {
       value: api.url,
       exportName: "PingsApiEndpoint",
     });
 
-    new cdk.CfnOutput(this, "UserPoolId", {
+    new CfnOutput(this, "UserPoolId", {
       value: userPool.userPoolId,
       exportName: "PingsUserPoolId",
     });
 
-    new cdk.CfnOutput(this, "PhotosBucketName", {
+    new CfnOutput(this, "PhotosBucketName", {
       value: photosBucket.bucketName,
       exportName: "PingsPhotosBucket",
     });
@@ -277,5 +279,3 @@ export class PingsBackendStack extends Stack {
     });
   }
 }
-
-import * as cdk from "aws-cdk-lib";
