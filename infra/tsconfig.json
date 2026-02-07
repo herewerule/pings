@@ -21,6 +21,6 @@
     "outDir": "./dist",
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["lib/**/*", "test/**/*", "functions/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["lib/**/*", "functions/**/*"],
+  "exclude": ["node_modules", "test/**/*", "**/*.test.ts"]
 }
